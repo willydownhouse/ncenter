@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "target": "es2016",
     "module": "commonjs",
     "outDir": "./build/",
     "esModuleInterop": true,
     "strict": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["./src/"],
-  "exclude": ["database"]
+  "include": ["./src/"]
 }

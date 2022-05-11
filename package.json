@@ -7,7 +7,8 @@
     "tsc": "tsc",
     "start:dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "start:prod": "NODE_ENV=production node build/index.js",
-    "lint": "eslint --ext .ts ."
+    "lint": "eslint --ext .ts .",
+    "test:db": "ts-node-dev src/dbtest.ts"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
     "typescript": "^4.6.4"
   },
   "dependencies": {
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
