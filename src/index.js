@@ -1,18 +1,11 @@
-import app from './app';
-import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
+const app = require('./app');
+const Sequelize = require('sequelize');
+const dotenv = require('dotenv');
 dotenv.config();
 
 const PORT = process.env.PORT || 3001;
 
-export const sequelize = new Sequelize(process.env.DB_URL as string, {
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: true,
-    },
-  },
-});
+const sequelize = new Sequelize(process.env.DB_URL);
 
 const connectDB = async () => {
   try {
@@ -21,7 +14,6 @@ const connectDB = async () => {
   } catch (err) {
     console.log(err);
     console.log('db connection failure');
-    process.exit(1);
   }
 };
 
@@ -30,3 +22,5 @@ connectDB().catch(err => console.log(err));
 app.listen(PORT, () => {
   console.log(`App listening port ${PORT}`);
 });
+
+module.exports = sequelize;
