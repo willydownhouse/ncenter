@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-const { user, notification, sequelize } = require('../database/models/');
+const { User, Notification } = require('../database/models/');
 
 const app = express();
 
@@ -12,9 +12,10 @@ app.get('/ping', (_, res) => {
   res.send('pong');
 });
 
-app.get('/api/notifications', async (_, res) => {
+app.get('/api/notifications/:id', async (req, res) => {
   try {
-    const data = await notification.findAll();
+    console.log(req.params);
+    const data = await Notification.findByPk(req.params.id);
 
     res.json(data);
   } catch (err) {

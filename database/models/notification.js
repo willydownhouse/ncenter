@@ -2,21 +2,22 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Notification = sequelize.define(
-    'notification',
+    'Notification',
     {
       title: DataTypes.STRING,
       text: DataTypes.STRING,
+      createdAt: DataTypes.DATE,
     },
     {
       sequelize,
       underscored: true,
-      timestamps: true,
+      timestamps: false,
       modelName: 'notification',
     }
   );
   Notification.associate = function (models) {
     // associations can be defined here
-    Notification.belongsToMany(models.user, {
+    Notification.belongsToMany(models.User, {
       through: 'user_notifications',
     });
   };

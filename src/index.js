@@ -1,6 +1,8 @@
 const app = require('./app');
 const Sequelize = require('sequelize');
+var pg = require('pg');
 const dotenv = require('dotenv');
+
 dotenv.config();
 
 const PORT = process.env.PORT || 3001;
@@ -13,14 +15,12 @@ const connectDB = async () => {
     console.log('db connected');
   } catch (err) {
     console.log(err);
-    console.log('db connection failure');
+    console.log('db connection fail');
   }
 };
 
-connectDB().catch(err => console.log(err));
+connectDB();
 
 app.listen(PORT, () => {
   console.log(`App listening port ${PORT}`);
 });
-
-module.exports = sequelize;

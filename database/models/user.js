@@ -2,7 +2,7 @@
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    'user',
+    'User',
     {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       underscored: true,
-      timestamps: true,
+      timestamps: false,
       modelName: 'user',
     }
   );
   User.associate = function (models) {
-    // associations can be defined here
-    User.belongsToMany(models.notification, {
+    // associations can be defined her
+    User.belongsToMany(models.Notification, {
       through: 'user_notifications',
     });
   };
