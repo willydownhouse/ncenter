@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       underscored: true,
-      timestamps: false,
+      timestamps: true,
       modelName: 'user',
     }
   );

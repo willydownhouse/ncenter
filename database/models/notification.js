@@ -6,12 +6,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       title: DataTypes.STRING,
       text: DataTypes.STRING,
-      createdAt: DataTypes.DATE,
     },
     {
       sequelize,
       underscored: true,
-      timestamps: false,
+      timestamps: true,
       modelName: 'notification',
     }
   );

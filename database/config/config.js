@@ -7,6 +7,7 @@ module.exports = {
     dialect: 'postgres',
   },
   test: {
+    use_env_variable: process.env.TEST_DATABASE_URL,
     url: process.env.TEST_DATABASE_URL,
     dialect: 'postgres',
   },

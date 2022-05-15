@@ -6,14 +6,17 @@
   "scripts": {
     "start:dev": "NODE_ENV=development nodemon src/index.js",
     "start:prod": "NODE_ENV=production node index.js",
-    "lint": "eslint --ext .js ."
+    "lint": "eslint --ext .js .",
+    "test": "NODE_ENV=test jest --verbose --runInBand"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.15.0",
-    "morgan": "^1.10.0"
+    "jest": "^28.1.0",
+    "morgan": "^1.10.0",
+    "supertest": "^6.2.3"
   },
   "dependencies": {
     "@babel/eslint-parser": "^7.17.0",
