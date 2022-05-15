@@ -19,6 +19,10 @@ module.exports = {
         allowNull: false,
         references: { model: 'notifications', key: 'id' },
       },
+      read: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
     });
   },
   async down(queryInterface, Sequelize) {

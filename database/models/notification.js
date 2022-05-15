@@ -2,7 +2,7 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Notification = sequelize.define(
-    'notification',
+    'Notification',
     {
       title: DataTypes.STRING,
       text: DataTypes.STRING,
