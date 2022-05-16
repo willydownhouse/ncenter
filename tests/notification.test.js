@@ -9,7 +9,7 @@ describe('Notifications', () => {
     const res = await api.get('/api/notifications');
 
     expect(res.statusCode).toBe(200);
-    expect(res.body).toHaveLength(0);
+    expect(res.body).toHaveLength(2);
   });
 
   afterAll(async () => {

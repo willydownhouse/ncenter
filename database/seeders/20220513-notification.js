@@ -2,20 +2,18 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return await queryInterface.bulkInsert('notification', [
+    return await queryInterface.bulkInsert('notifications', [
       {
         title: 'hello',
         text: 'tere tere',
-
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
       },
       {
         title: 'ciao',
         text: 'sellasta',
-
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
       },
     ]);
   },
