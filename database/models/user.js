@@ -4,9 +4,27 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-      role: DataTypes.ENUM('client', 'admin'),
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true,
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      role: {
+        type: DataTypes.ENUM('client', 'admin'),
+        defaultValue: 'client',
+      },
     },
     {
       sequelize,
@@ -20,6 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.Notification, {
       through: 'user_notifications',
     });
+
+    User.hasOne(models.Notification);
   };
 
   return User;
