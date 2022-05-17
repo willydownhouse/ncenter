@@ -23,13 +23,30 @@ describe('SIGN UP', () => {
   });
   test('fail if email already exists', async () => {
     const res = await api.post('/api/signup').send({
-      email: 'willy@.test.com',
+      email: 'willy@test.com',
       password: 'test1234',
     });
 
     expect(res.statusCode).toBe(400);
-    expect(res.body.message).toBe(
-      'Validation error: Validation isEmail on email failed'
+    expect(res.body.message).toBe('email must be unique');
+  });
+
+  test('Sign up works with right credentials', async () => {
+    const res = await api.post('/api/signup').send({
+      email: 'willy@gmail.com',
+      password: 'test1234',
+    });
+
+    const resFromDelete = await api.delete(
+      '/api/test/users/?email=willy@gmail.com'
     );
+
+    expect(res.statusCode).toBe(201);
+    expect(res.body.user).toBeDefined();
+    expect(resFromDelete.text).toBe('user deleted');
+    expect(resFromDelete.statusCode).toBe(200);
+  });
+  afterAll(async () => {
+    await sequelize.close();
   });
 });

@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      // created_id: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   foreignKey: true,
+      // },
     },
     {
       sequelize,
@@ -30,6 +35,8 @@ module.exports = (sequelize, DataTypes) => {
     Notification.belongsToMany(models.User, {
       through: 'user_notifications',
     });
+
+    Notification.belongsTo(models.User);
   };
 
   return Notification;

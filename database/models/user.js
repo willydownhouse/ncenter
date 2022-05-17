@@ -38,6 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.Notification, {
       through: 'user_notifications',
     });
+
+    User.hasOne(models.Notification);
   };
 
   return User;

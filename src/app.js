@@ -5,6 +5,7 @@ const notificationRouter = require('./routes/notificationRouter');
 const errorController = require('./controllers/errorController');
 const authRouter = require('./routes/authRouter');
 const AppError = require('./utils/AppError');
+const testRouter = require('./routes/testRouter');
 
 const app = express();
 
@@ -14,6 +15,10 @@ console.log(process.env.NODE_ENV);
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
+}
+
+if (process.env.NODE_ENV === 'test') {
+  app.use('/api/test', testRouter);
 }
 
 app.get('/ping', (_, res) => {

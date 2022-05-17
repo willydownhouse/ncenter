@@ -6,12 +6,14 @@ module.exports = {
       {
         title: 'hello',
         text: 'tere tere',
+        user_id: 2,
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         title: 'ciao',
         text: 'sellasta',
+        user_id: 2,
         created_at: new Date(),
         updated_at: new Date(),
       },

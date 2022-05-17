@@ -9,12 +9,14 @@ module.exports = {
       {
         email: 'willy@test.com',
         password: hash,
+        role: 'client',
         created_at: new Date(),
         updated_at: new Date(),
       },
       {
         email: 'admin@test.com',
         password: hash,
+        role: 'admin',
         created_at: new Date(),
         updated_at: new Date(),
       },
