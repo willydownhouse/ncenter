@@ -47,9 +47,43 @@ const signIn = async (req, res, next) => {
   });
 };
 
-const protect = (req, res, next) => {
-  res.send('protect');
+const protect = async (req, res, next) => {
+  if (
+    !req.headers.authorization ||
+    !req.headers.authorization.startsWith('Bearer')
+  ) {
+    throw new AppError('Please sign in to get access', 401);
+  }
+
+  const token = req.headers.authorization.substring(7);
+
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+  const userFound = await User.findOne({ where: { id: decoded.id } });
+
+  if (!userFound) {
+    throw new AppError('Please create account to get access');
+  }
+
+  const user = userFound.dataValues;
+  delete user.password;
+
+  console.log(user);
+
+  req.user = user;
+
+  next();
 };
+
+const restrictTo =
+  (...roles) =>
+  (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      throw new AppError('You are not allowed to do this action', 401);
+    }
+
+    next();
+  };
 const signOut = (req, res, next) => {
   res.send('signOut');
 };
@@ -61,6 +95,7 @@ const oauth = (req, res, next) => {
 module.exports = {
   signUp,
   signIn,
+  restrictTo,
   signOut,
   protect,
   oauth,

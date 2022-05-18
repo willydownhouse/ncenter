@@ -1,20 +1,20 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Notification = sequelize.define(
-    'user_notifications',
+  const UserNotification = sequelize.define(
+    'UserNotification',
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      user_id: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: { model: 'users', key: 'id' },
       },
-      notification_id: {
+      notificationId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: { model: 'notifications', key: 'id' },
@@ -27,16 +27,16 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       underscored: true,
-      timestamps: true,
-      modelName: 'user_notifications',
+      timestamps: false,
+      modelName: 'user_notification',
     }
   );
-  Notification.associate = function (models) {
-    // associations can be defined here
-    Notification.belongsToMany(models.User, {
-      through: 'user_notifications',
-    });
-  };
+  // Notification.associate = function (models) {
+  //   // associations can be defined here
+  //   Notification.belongsToMany(models.User, {
+  //     through: 'user_notifications',
+  //   });
+  // };
 
-  return Notification;
+  return UserNotification;
 };

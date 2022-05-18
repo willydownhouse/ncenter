@@ -12,6 +12,10 @@ module.exports = {
         notification_id: 2,
         read: true,
       },
+      {
+        user_id: 2,
+        notification_id: 1,
+      },
     ]);
   },
 

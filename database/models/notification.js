@@ -17,11 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      // created_id: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      //   foreignKey: true,
-      // },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        foreignKey: true,
+      },
     },
     {
       sequelize,
