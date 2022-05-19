@@ -13,6 +13,10 @@ module.exports = {
         read: true,
       },
       {
+        user_id: 3,
+        notification_id: 1,
+      },
+      {
         user_id: 2,
         notification_id: 1,
       },

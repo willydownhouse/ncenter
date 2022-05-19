@@ -9,16 +9,16 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: { model: 'users', key: 'id' },
-      },
-      notificationId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: { model: 'notifications', key: 'id' },
-      },
+      // userId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   references: { model: 'users', key: 'id' },
+      // },
+      // notificationId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   references: { model: 'notifications', key: 'id' },
+      // },
       read: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
@@ -31,12 +31,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'user_notification',
     }
   );
-  // Notification.associate = function (models) {
-  //   // associations can be defined here
-  //   Notification.belongsToMany(models.User, {
-  //     through: 'user_notifications',
-  //   });
-  // };
 
   return UserNotification;
 };

@@ -5,16 +5,53 @@ const {
 } = require('../../database/models');
 const AppError = require('../utils/AppError');
 
+const changeNotificationStatus = async (req, res) => {
+  const { id } = req.params;
+
+  const notification = await Notification.findByPk(id, {
+    include: [
+      {
+        model: User,
+      },
+    ],
+  });
+
+  if (!notification) {
+    throw new AppError('No notification with that id', 400);
+  }
+
+  if (
+    !notification.dataValues.Users.map(ob => ob.dataValues)
+      .map(ob => ob.id)
+      .includes(req.user.id)
+  ) {
+    throw new AppError('You cannot modify this notification');
+  }
+
+  const myNotification = await UserNotification.findOne({
+    where: {
+      UserId: req.user.id,
+      NotificationId: notification.id,
+    },
+  });
+
+  const updatedNotification = await myNotification.update({
+    read: true,
+  });
+
+  res.status(200).json(updatedNotification);
+};
+
 const getAllMyNotifications = async (req, res) => {
   const notifications = await Notification.findAll({
     include: [
       {
         model: User,
         attributes: {
-          exclude: ['password', 'createdAt', 'updatedAt'],
+          exclude: ['password', 'createdAt', 'updatedAt', 'role'],
         },
         through: {
-          attributes: [],
+          attributes: ['read'],
         },
         where: {
           id: req.user.id,
@@ -22,7 +59,7 @@ const getAllMyNotifications = async (req, res) => {
       },
     ],
     attributes: {
-      exclude: ['updatedAt'],
+      exclude: ['updatedAt', 'userId'],
     },
   });
 
@@ -33,8 +70,6 @@ const getAllMyNotifications = async (req, res) => {
 };
 
 const createNotification = async (req, res, next) => {
-  console.log(req.body);
-
   const { title, text, users } = req.body;
 
   if (!title || !text || !users) {
@@ -60,10 +95,14 @@ const createNotification = async (req, res, next) => {
     });
   });
 
-  return res.status(201).json(notification);
+  return res.status(201).json({
+    notification,
+    createdForUsers: users,
+  });
 };
 
 module.exports = {
   getAllMyNotifications,
   createNotification,
+  changeNotificationStatus,
 };

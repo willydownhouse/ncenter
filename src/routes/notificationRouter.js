@@ -8,6 +8,8 @@ router.use(authController.protect);
 
 router.route('/').get(notificationController.getAllMyNotifications);
 
+router.route('/:id').patch(notificationController.changeNotificationStatus);
+
 router.use(authController.restrictTo('admin'));
 
 router.route('/').post(notificationController.createNotification);
