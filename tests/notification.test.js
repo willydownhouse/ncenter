@@ -23,7 +23,7 @@ describe('GET NOTIFICATIONS', () => {
     expect(res.body.docs).toEqual(4);
   });
 });
-describe('CREATING NOTIFICATIONS ', () => {
+describe('CREATING ROLE CLIENT ', () => {
   let token;
   beforeEach(async () => {
     const res = await api.post('/api/signin').send({
@@ -42,7 +42,8 @@ describe('CREATING NOTIFICATIONS ', () => {
     expect(res.body.message).toBe('You are not allowed to do this action');
   });
 });
-describe('CREATING NOTIFICATIONS ', () => {
+
+describe('CREATING ROLE ADMIN ', () => {
   let token;
   beforeEach(async () => {
     const res = await api.post('/api/signin').send({
@@ -82,45 +83,48 @@ describe('CREATING NOTIFICATIONS ', () => {
     expect(res.statusCode).toBe(400);
     expect(res.body.message).toBe('Not a valid notification');
   });
-  // test('fails if no text', async () => {
-  //   const res = await api
-  //     .post('/api/notifications')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       title: 'Testi notification',
-  //       users: [1],
-  //     });
 
-  //   expect(res.statusCode).toBe(400);
-  //   expect(res.body.message).toBe('Not a valid notification');
-  // });
-  // test('fails if no users', async () => {
-  //   const res = await api
-  //     .post('/api/notifications')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       title: 'Testi notification',
-  //       text: 'sas',
-  //     });
+  test('fails if no text', async () => {
+    const res = await api
+      .post('/api/notifications')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        title: 'Testi notification',
+        users: [1],
+      });
 
-  //   expect(res.statusCode).toBe(400);
-  //   expect(res.body.message).toBe('Not a valid notification');
-  // });
-  // test('fails if users length is 0', async () => {
-  //   const res = await api
-  //     .post('/api/notifications')
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({
-  //       title: 'Testi notification',
-  //       text: 'sas',
-  //       users: [],
-  //     });
+    expect(res.statusCode).toBe(400);
+    expect(res.body.message).toBe('Not a valid notification');
+  });
 
-  //   expect(res.statusCode).toBe(400);
-  //   expect(res.body.message).toBe('Please sent notification at least one user');
-  // });
-});
+  test('fails if no users', async () => {
+    const res = await api
+      .post('/api/notifications')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        title: 'Testi notification',
+        text: 'sas',
+      });
 
-afterAll(async () => {
-  await sequelize.close();
+    expect(res.statusCode).toBe(400);
+    expect(res.body.message).toBe('Not a valid notification');
+  });
+
+  test('fails if users length is 0', async () => {
+    const res = await api
+      .post('/api/notifications')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        title: 'Testi notification',
+        text: 'sas',
+        users: [],
+      });
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.message).toBe('Please sent notification at least one user');
+  });
+
+  afterAll(async () => {
+    await sequelize.close();
+  });
 });

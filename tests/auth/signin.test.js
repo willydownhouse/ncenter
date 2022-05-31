@@ -36,8 +36,6 @@ describe('SIGN IN', () => {
       password: 'test1234',
     });
 
-    console.log(res.body);
-
     expect(res.statusCode).toBe(200);
     expect(res.body.token).toBeDefined();
   });

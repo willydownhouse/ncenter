@@ -86,18 +86,25 @@ const createNotification = async (req, res, next) => {
     userId: req.user.id,
   });
 
-  Promise.all(users).then(users => {
-    users.map(id => {
-      UserNotification.create({
-        userId: id,
-        notificationId: notification.id,
-      });
-    });
-  });
+  let ids = [];
 
-  return res.status(201).json({
-    notification,
-    createdForUsers: users,
+  users.forEach(async id => {
+    try {
+      const res = await UserNotification.create({
+        UserId: id,
+        NotificationId: notification.id,
+      });
+      ids.push(res.dataValues.UserId);
+    } catch (err) {
+      return next(new AppError(err.parent.detail, 400));
+    }
+
+    if (ids.length === users.length) {
+      return res.status(201).json({
+        notification,
+        createdForUsers: users,
+      });
+    }
   });
 };
 

@@ -9,16 +9,16 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      // userId: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      //   references: { model: 'users', key: 'id' },
-      // },
-      // notificationId: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      //   references: { model: 'notifications', key: 'id' },
-      // },
+      UserId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'users', key: 'id' },
+      },
+      NotificationId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'notifications', key: 'id' },
+      },
       read: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
