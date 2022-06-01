@@ -16,10 +16,30 @@ router.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureMessage: 'Login failure' }),
   (req, res) => {
-    console.log(req);
+    console.log(req.session);
+
+    req.user = req.session.passport.user;
 
     res.send('success login');
   }
 );
+
+router.get('/auth/logout', (req, res, next) => {
+  console.log('req.session');
+  console.log(req.session);
+  req.session = null;
+  console.log('requser:');
+  console.log(req.user);
+
+  req.logout(err => {
+    console.log('LOGOUT:');
+    console.log(req.session);
+    console.log(req.user);
+    if (err) {
+      return next(err);
+    }
+    res.send('you logged out');
+  });
+});
 
 module.exports = router;

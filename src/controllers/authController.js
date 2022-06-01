@@ -88,15 +88,10 @@ const signOut = (req, res, next) => {
   res.send('signOut');
 };
 
-const oauth = (req, res, next) => {
-  res.send('oauth');
-};
-
 module.exports = {
   signUp,
   signIn,
   restrictTo,
   signOut,
   protect,
-  oauth,
 };
