@@ -1,7 +1,8 @@
-const { User } = require('../../database/models');
+const { User, OAuth } = require('../../database/models');
 const AppError = require('../utils/AppError');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 
 const signUp = async (req, res, next) => {
   const { email, password } = req.body;
@@ -68,8 +69,6 @@ const protect = async (req, res, next) => {
   const user = userFound.dataValues;
   delete user.password;
 
-  console.log(user);
-
   req.user = user;
 
   next();
@@ -85,7 +84,51 @@ const restrictTo =
     next();
   };
 const signOut = (req, res, next) => {
-  res.send('signOut');
+  req.session.destroy(err => {
+    req.user = undefined;
+
+    if (err) {
+      return next(err);
+    }
+    res.status(200).json({
+      message: 'You logged out',
+    });
+  });
+};
+
+//GOOGLE OAUTH CONTROLLERS
+
+const googleAuthSuccess = async (req, res) => {
+  const email = req.session.passport.user.emails[0].value;
+
+  const emailInDataBase = await OAuth.findOne({ where: { email } });
+
+  if (!emailInDataBase) {
+    await OAuth.create({
+      email,
+    });
+  }
+
+  const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+
+  req.user = email;
+
+  res.status(200).json({
+    token,
+    email,
+  });
+};
+
+const isAuthenticated = (req, res, next) => {
+  console.log('REQ USER');
+  console.log(req.user);
+  if (req.user) return next();
+
+  res.status(401).json({
+    message: 'Sign in to get access',
+  });
 };
 
 module.exports = {
@@ -94,4 +137,6 @@ module.exports = {
   restrictTo,
   signOut,
   protect,
+  googleAuthSuccess,
+  isAuthenticated,
 };
