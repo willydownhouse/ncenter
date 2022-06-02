@@ -17,11 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      // created_id: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      //   foreignKey: true,
-      // },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        foreignKey: true,
+      },
     },
     {
       sequelize,
@@ -33,8 +33,11 @@ module.exports = (sequelize, DataTypes) => {
   Notification.associate = function (models) {
     // associations can be defined here
     Notification.belongsToMany(models.User, {
-      through: 'user_notifications',
+      through: models.UserNotification,
     });
+    // Notification.belongsToMany(models.User, {
+    //   through: 'user_notifications',
+    // });
 
     Notification.belongsTo(models.User);
   };

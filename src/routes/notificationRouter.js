@@ -1,11 +1,17 @@
 const express = require('express');
 const notificationController = require('../controllers/notificationController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-router
-  .route('/')
-  .get(notificationController.getAllNotification)
-  .post(notificationController.createNotification);
+router.use(authController.protect, authController.isAuthenticated);
+
+router.route('/').get(notificationController.getAllMyNotifications);
+
+router.route('/:id').patch(notificationController.changeNotificationStatus);
+
+router.use(authController.restrictTo('admin'));
+
+router.route('/').post(notificationController.createNotification);
 
 module.exports = router;

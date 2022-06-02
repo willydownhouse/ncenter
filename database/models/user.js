@@ -36,8 +36,11 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function (models) {
     // associations can be defined her
     User.belongsToMany(models.Notification, {
-      through: 'user_notifications',
+      through: models.UserNotification,
     });
+    // User.belongsToMany(models.Notification, {
+    //   through: 'user_notifications',
+    // });
 
     User.hasOne(models.Notification);
   };
